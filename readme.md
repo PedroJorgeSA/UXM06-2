@@ -5,35 +5,23 @@
 
 ## 1. Introdução à proposta
 
-O projeto do módulo desenvolve um **algoritmo de concessão de crédito para o Banco Pan**, baseado em Programação Linear (LP) que determina, de forma otimizada, o limite de crédito a ser concedido a cada cliente a partir de variáveis financeiras e de risco.
+A microinterface proposta é uma **animação demonstrativa do processamento**, especificamente uma esteira de crédito interativa que simula, em tempo real, como o algoritmo avalia cada cliente e toma sua decisão de limite.
 
-A microinterface proposta é uma **animação demonstrativa do processamento** — especificamente, uma esteira de crédito interativa que simula, em tempo real, como o algoritmo avalia cada cliente e toma sua decisão de limite.
+Essa proposta contribui diretamente para o entendimento do modelo de crédito ao transformar conceitos matemáticos abstratos (como PD, LGD e margem de rentabilidade) em elementos visuais tangíveis e interativos. 
 
-### O que a interface comunica
+Ao permitir que a nossa persona Joana Amorim, analista de Política de Crédito, manipule os parâmetros e observe os efeitos instantaneamente na esteira, a interface torna o processo decisório transparente e acessível para públicos não técnicos, como a equipe de política de crédito. A abordagem se alinha com a proposta da entrega ao utilizar a biblioteca p5.js para construir uma microinterface funcional que comunica, de forma clara e envolvente, a lógica por trás da aprovação ou negação de crédito.
 
-A animação coloca o usuário na perspectiva do algoritmo: clientes chegam anonimamente pela esteira (sem crédito), são absorvidos pela **"Caixa Branca"**  e saem pela outra ponta com um limite definido ou com a solicitação negada.
+Além de cada perfil poder ser simulado na esteira para a joana ter um entendimento melhor sobre como cada perfi é interpretado pelo algoritmo, e possuindo maior explicabilidade.
 
-Durante o processamento, o usuário pode **ajustar os 4 parâmetros centrais do modelo** via sliders interativos:
+### Uso do p5.js no código
 
-| Parâmetro | Significado |
-|---|---|
-| `r` — Interchange | Taxa de receita por transação do cartão |
-| `u` — Utilização | Fração esperada do limite que o cliente usa |
-| `LGD` — Perda em caso de default | Percentual perdido quando o cliente não paga |
-| `Lmax` — Teto (R$) | Limite máximo concedível pelo banco |
+O `sketch.js` explora vários recursos do p5.js de forma integrada:
 
-O **limiar de rentabilidade PD\*** — calculado como `PD* = r·u / LGD` — é exibido em tempo real no painel superior esquerdo. Todo cliente com probabilidade de default (`PD`) abaixo desse limiar é lucrativo para o banco e tem crédito aprovado; acima, é negado.
-
-### Por que essa escolha
-
-Dentre as opções do enunciado, esta proposta combina:
-- **animação demonstrativa do processamento** (a esteira em movimento);
-- **painel de controle e ajustes do algoritmo** (os sliders com feedback ao vivo);
-- **visualização interativa dos resultados** (badge de resultado com perfil, PD e lucro π).
-
-Isso torna o algoritmo — que é matematicamente denso — tangível e compreensível para qualquer usuário, sem exigir conhecimento prévio de LP.
-
----
+- **Loop de animação (`draw`)**: toda a cena é redesenhada a 60 fps. O estado de cada cliente (`approach → processing → exit`) é atualizado frame a frame, criando fluxo contínuo sem bibliotecas externas de animação.
+- **Geometria e formas**: a esteira é construída com `rect`, `beginShape/endShape` (listras diagonais paralelas em movimento) e `arc` (rolamentos e logo do Banco Pan). A "Caixa Branca" usa `rect` com raio de borda e camadas de `fill` com transparência para o efeito de glow pulsante.
+- **Push/Pop e transformações**: cada avatar de cliente é desenhado dentro de `push/pop` com `translate` e `scale` (easing cúbico na aparição), isolando transformações sem afetar o restante da cena.
+- **Interação com mouse**: sliders customizados detectam hover (`mouseMoved`), clique (`mousePressed`) e arrasto (`mouseDragged`) manualmente, sem elementos HTML, mantendo tudo dentro do canvas.
+- **Tipografia e alinhamento**: `textAlign`, `textSize` e `textStyle` são usados para renderizar labels, valores e badges diretamente no canvas com precisão de pixel.
 
 ## 2. Rascunhos iniciais
 
@@ -41,7 +29,7 @@ Isso torna o algoritmo — que é matematicamente denso — tangível e compreen
 
 A ideia inicial surgiu com o intuito de criar uma animação simples que mostrasse como um cliente é interpretado pelo algoritmo. O cliente entra com seus dados em uma ponta e, da outra, sai com o crédito definido. Um hover de informação foi pensado para exibir a explicabilidade com o repertório matemático do modelo (PD, π, LGD).
 
-A metáfora da **esteira de produção industrial** foi escolhida porque remete ao processamento em lote — real no contexto bancário — e torna o fluxo direcional (entrada → processamento → saída) imediatamente legível.
+A metáfora da **esteira de produção industrial** foi escolhida porque remete ao processamento em lote, real no contexto bancário — e torna o fluxo direcional (entrada → processamento → saída) imediatamente legível para um usuário não ténico, que se alinham com nossa persona do time de politica de credito.
 
 Os elementos pensados desde o início:
 - Esteira animada com listras diagonais em movimento
@@ -62,7 +50,6 @@ O Figma foi utilizado para definir a **hierarquia visual** e entender melhor a d
 
 Durante a implementação em p5.js, algumas ideias foram simplificadas ou adaptadas:
 - O hover de explicabilidade individual foi substituído pelo **badge de resultado global** (mais legível em animação contínua)
-- Foram adicionados **partículas de burst** ao momento de decisão — um efeito de micro-animação que reforça visualmente o instante de processamento
 - O logo do Banco Pan foi construído vetorialmente dentro do p5.js (sem imagens externas), usando formas geométricas simples
 
 ---
@@ -77,10 +64,20 @@ A microinterface final é um arquivo `index.html` + `sketch.js` que roda diretam
 
 - **Esteira animada** com listras diagonais em movimento contínuo e rolamentos nas extremidades
 - **Clientes gerados automaticamente** em 4 perfis de risco (Ótimo, Bom, Médio, Ruim), cada um com PD e capacidade aleatórios dentro da faixa do perfil
-- **Caixa Branca central** com glow pulsante durante o processamento e logo vetorial do Banco Pan
-- **4 sliders interativos** para ajuste em tempo real dos parâmetros `r`, `u`, `LGD` e `Lmax` — cada alteração recalcula imediatamente o limiar PD* e a decisão de todos os clientes futuros
-- **Limiar de rentabilidade animado** com valor em destaque e cor pulsante (ciano → verde)
-- **Micro-animações** de bobbing, fade-in e scale-up nos avatares de clientes
+- **Caixa Branca central** com indicação visual de processamento e logo oficial do Banco Pan importado como imagem
+- **4 sliders interativos** para ajuste em tempo real dos parâmetros `r`, `u`, `LGD` e `Lmax`, onde cada alteração recalcula imediatamente o limiar PD* e a decisão de todos os clientes futuros
+- **Limiar de rentabilidade animado** com valor em destaque e cor pulsante
+- **Micro-animações** de fade-in e scale-up nos avatares de clientes
+
+#### Adequação ao Design System do Banco Pan
+
+A interface foi atualizada para seguir as diretrizes visuais do [Design System do Banco Pan](https://designsystem.bancopan.com.br/). As principais adequações realizadas foram:
+
+- **Paleta de cores**: o azul primário da interface utiliza o tom `#07B2FD`, cor institucional do Banco Pan, aplicado nos acentos dos painéis, sliders, barras de progresso e indicadores de destaque
+- **Logo oficial**: a representação vetorial do logo foi substituída pela imagem oficial `logobancopan.png`, garantindo fidelidade à identidade visual da marca
+- **Tipografia**: a fonte Inter foi mantida por sua proximidade com as fontes do sistema de design, preservando legibilidade e hierarquia visual
+- **Tons neutros**: os tons de fundo e texto seguem a escala de cinzas do design system (`#0D1317`, `#333942`), criando contraste adequado e leitura confortável
+- **Bordas e espaçamentos**: os cards e painéis utilizam bordas com opacidade sutil no azul Pan, cantos arredondados consistentes e espaçamento generoso entre elementos
 
 
 #### Capturas do resultado
