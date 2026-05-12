@@ -32,8 +32,13 @@ const SLIDER_DEFS = [
   { key:'Lmax', label:'Lmax — Teto (R$)', min:5000,  max:25000, step:500,   fmt: v=>'R$'+Math.round(v).toLocaleString('pt-BR') },
 ];
 
+// Calcula o limiar PD* (Probability of Default threshold)
+// PD* = (r × u) / LGD → se o PD do cliente for menor que PD*, ele é rentável
 function pdStar() { return (params.r * params.u) / params.LGD; }
 
+// Calcula o crédito para um cliente com base na margem de rentabilidade (π)
+// π = r·u − PD·LGD → margem positiva significa que o cliente é rentável
+// Limite = min(capacidade do cliente, teto máximo Lmax)
 function computeCredit(c) {
   const pi = params.r * params.u - c.pd * params.LGD;
   if (pi <= 0) return { limit:0, approved:false, pi };

@@ -17,7 +17,7 @@ Essa proposta contribui diretamente para o entendimento do modelo de crédito ao
 
 Ao permitir que a nossa persona Joana Amorim, analista de Política de Crédito, manipule os parâmetros e observe os efeitos instantaneamente na esteira, a interface torna o processo decisório transparente e acessível para públicos não técnicos, como a equipe de política de crédito. A abordagem se alinha com a proposta da entrega ao utilizar a biblioteca p5.js para construir uma microinterface funcional que comunica, de forma clara e envolvente, a lógica por trás da aprovação ou negação de crédito.
 
-Além de cada perfil poder ser simulado na esteira para a joana ter um entendimento melhor sobre como cada perfi é interpretado pelo algoritmo, e possuindo maior explicabilidade.
+Além de cada perfil poder ser simulado na esteira para a Joana ter um entendimento melhor sobre como cada perfil é interpretado pelo algoritmo, possuindo maior explicabilidade.
 
 ### Uso do p5.js no código
 
@@ -35,7 +35,7 @@ O `sketch.js` explora vários recursos do p5.js de forma integrada:
 
 A ideia inicial surgiu com o intuito de criar uma animação simples que mostrasse como um cliente é interpretado pelo algoritmo. O cliente entra com seus dados em uma ponta e, da outra, sai com o crédito definido. Um hover de informação foi pensado para exibir a explicabilidade com o repertório matemático do modelo (PD, π, LGD).
 
-A metáfora da **esteira de produção industrial** foi escolhida porque remete ao processamento em lote, real no contexto bancário — e torna o fluxo direcional (entrada → processamento → saída) imediatamente legível para um usuário não ténico, que se alinham com nossa persona do time de politica de credito.
+A metáfora da **esteira de produção industrial** foi escolhida porque remete ao processamento em lote, real no contexto bancário, e torna o fluxo direcional (entrada → processamento → saída) imediatamente legível para um usuário não técnico, que se alinha com nossa persona do time de política de crédito.
 
 Os elementos pensados desde o início:
 - Esteira animada com listras diagonais em movimento
@@ -47,16 +47,21 @@ Os elementos pensados desde o início:
 
 ### Refinamento no Figma
 
-![Esboço no papel](Assets/FigmaSketch.png)
+![Refinamento no Figma](Assets/FigmaSketch.png)
 
 O Figma foi utilizado para definir a **hierarquia visual** e entender melhor a disposição dos elementos antes de codificar. As decisões tomadas nessa etapa:
+
+- Definição do layout com painéis laterais (seletor de perfil à esquerda, parâmetros à direita) e esteira centralizada
+- Escolha da paleta de cores por perfil de risco (verde para ótimo, azul para bom, laranja para médio, vermelho para ruim)
+- Posicionamento do painel de explicabilidade abaixo da esteira, com divisão em três colunas (Margem, Limite, Decisão)
+- Hierarquia tipográfica com títulos em bold e valores numéricos em destaque
 
 
 ### Adaptações durante o desenvolvimento
 
 Durante a implementação em p5.js, algumas ideias foram simplificadas ou adaptadas:
 - O hover de explicabilidade individual foi substituído pelo **badge de resultado global** (mais legível em animação contínua)
-- O logo do Banco Pan foi construído vetorialmente dentro do p5.js (sem imagens externas), usando formas geométricas simples
+- O logo do Banco Pan foi importado como imagem oficial (`logobancopan.png`) para garantir fidelidade à identidade visual da marca
 
 ---
 
@@ -88,7 +93,11 @@ A interface foi atualizada para seguir as diretrizes visuais do [Design System d
 
 #### Capturas do resultado
 
-> *A interface roda em `index.html`, basta servir localmente para visualizar a animação completa.*
+![Visão geral da interface](Assets/resultado_visao_geral.png)
+*Visão geral da microinterface: esteira de crédito com cliente sendo processado, painéis de parâmetros e seletor de perfil*
+
+![Painel de explicabilidade](Assets/resultado_explicabilidade.png)
+*Painel de explicabilidade mostrando a análise detalhada: margem de rentabilidade, limite calculado e decisão final de aprovação*
 
 ```
 Arquivos entregues:
@@ -109,26 +118,11 @@ Arquivos entregues:
 
 O projeto é composto por arquivos estáticos (HTML + JS) e precisa ser servido por um servidor local para que o carregamento de imagens funcione corretamente. Abaixo estão as opções disponíveis:
 
-### Opção 1: Python (recomendado)
-
-Abra o terminal na pasta raiz do projeto e execute:
-
-```bash
-python -m http.server 8080
-```
-
-Em seguida, acesse no navegador: [http://localhost:8080](http://localhost:8080)
-
-### Opção 2: Live Server (VS Code)
+### Opção 1: Live Server (VS Code)
 
 1. Instale a extensão **Live Server** no VS Code
 2. Clique com o botão direito no arquivo `index.html`
 3. Selecione **"Open with Live Server"**
 
-### Opção 3: Node.js
-
-```bash
-npx serve .
-```
 
 > **Importante**: não abra o arquivo `index.html` diretamente pelo navegador (duplo clique), pois o carregamento da logo e de outros assets pode falhar por restrições de CORS em arquivos locais.
