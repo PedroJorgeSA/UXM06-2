@@ -9,9 +9,9 @@ let explData = null, explAlpha = 0;
 let logoImg;
 
 function preload() {
-  logoImg = loadImage('logobancopan.png',
+  logoImg = loadImage('Assets/logobancopan.png',
     () => console.log('Logo loaded OK'),
-    () => { logoImg = loadImage('UXM06-2/Assets/logobancopan.png'); }
+    () => { logoImg = loadImage('logobancopan.png'); }
   );
 }
 

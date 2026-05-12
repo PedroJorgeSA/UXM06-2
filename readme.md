@@ -88,11 +88,47 @@ A interface foi atualizada para seguir as diretrizes visuais do [Design System d
 
 #### Capturas do resultado
 
-> *A interface roda em `index.html` — abrir no navegador para visualizar a animação completa.*
+> *A interface roda em `index.html`, basta servir localmente para visualizar a animação completa.*
 
 ```
 Arquivos entregues:
+├── Assets/
+│   ├── logobancopan.png
+│   ├── clienteMedio.png
+│   ├── clienteRuim.png
+│   ├── FigmaSketch.png
+│   └── paperSketch.jpg
 ├── index.html   → estrutura e estilos da página
 ├── sketch.js    → lógica p5.js da microinterface
 └── readme.md    → esta documentação
 ```
+
+---
+
+## 4. Como rodar o projeto
+
+O projeto é composto por arquivos estáticos (HTML + JS) e precisa ser servido por um servidor local para que o carregamento de imagens funcione corretamente. Abaixo estão as opções disponíveis:
+
+### Opção 1: Python (recomendado)
+
+Abra o terminal na pasta raiz do projeto e execute:
+
+```bash
+python -m http.server 8080
+```
+
+Em seguida, acesse no navegador: [http://localhost:8080](http://localhost:8080)
+
+### Opção 2: Live Server (VS Code)
+
+1. Instale a extensão **Live Server** no VS Code
+2. Clique com o botão direito no arquivo `index.html`
+3. Selecione **"Open with Live Server"**
+
+### Opção 3: Node.js
+
+```bash
+npx serve .
+```
+
+> **Importante**: não abra o arquivo `index.html` diretamente pelo navegador (duplo clique), pois o carregamento da logo e de outros assets pode falhar por restrições de CORS em arquivos locais.
