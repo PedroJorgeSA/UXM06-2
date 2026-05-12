@@ -1,5 +1,11 @@
-# Esteira de Crédito — Algoritmo Panamericano
+# Esteira de Crédito: Algoritmo Panamericano
 ### Microinterface Interativa · p5.js · Atividade Ponderada UXM06-2
+
+<p align="center">
+  <img src="Assets/clienteMedio.png" alt="Cliente Médio" width="380"/>
+  &nbsp;&nbsp;
+  <img src="Assets/clienteRuim.png" alt="Cliente Ruim" width="380"/>
+</p>
 
 ---
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algoritmo Panamericano – Esteira de Crédito</title>
+  <meta name="description" content="Microinterface interativa que simula a esteira de crédito do Banco Pan, mostrando como o algoritmo de otimização LP define limites para cada perfil de cliente." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+      color: #0f172a;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    #canvas-container {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 1px 3px rgba(0,0,0,0.08),
+        0 8px 32px rgba(0,0,0,0.08),
+        0 0 0 1px rgba(0,0,0,0.04);
+      background: #f8fafc;
+    }
+
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Esteira de Crédito — Algoritmo Panamericano</h1>
+    <p>Banco Pan · Microinterface de Decisão de Limite · p5.js</p>
+  </header>
+  <div id="canvas-container"></div>
+  <script src="sketch.js"></script>
+</body>
+</html>
